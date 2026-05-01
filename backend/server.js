@@ -33,12 +33,15 @@ app.use(express.json());
 app.use('/api/chat', setChatRoutes(io));
 
 // MongoDB connection
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected');
-    console.log(`📚 Connected to database: ${mongoose.connection.db.databaseName}`);
-  })
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('✅ MongoDB connected');
+  console.log(`📚 Connected to database: ${mongoose.connection.db.databaseName}`);
+})
+.catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Store online users
 const onlineUsers = new Map();
